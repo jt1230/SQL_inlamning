@@ -16,7 +16,7 @@ namespace SQLövning
             // Sätt ihop connectionstring
             var connString = string.Format(ConnectionString, DatabaseName); //måsvinge 0, kmr att ersättas mot det andra parametern i parentesen
             // Förbered SQLConnection
-            using (var connection = new SqlConnection(connString)) //måste köra/installera System.Data.SqlClient nuget för att denna ska fungera
+            using (var connection = new SqlConnection(connString)) //using-sats för att automatisk stänga objektet åt oss, slipper connection.Close()
             {
                 // Öppna koppling till databasen
                 connection.Open();

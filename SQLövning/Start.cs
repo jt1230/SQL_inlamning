@@ -13,7 +13,7 @@ using System.Data.SqlClient;
             {
                 var db = new Databas();
                 db.DatabaseName = "People"; //namnet på databasen där MOCK_DATA finns
-                var allParameters = new ParamData[0];
+                var allParameters = new ParamData[2];
 
                 while (true)
                 {
@@ -40,7 +40,7 @@ using System.Data.SqlClient;
                             var dtCountry = db.GetDataTable("Select Count(Distinct country) from MOCK_DATA", allParameters);
                             foreach (DataRow item in dtCountry.Rows)
                             {
-                                Console.WriteLine($"There are a total of {item[0]} unique countries.");
+                                Console.WriteLine($"There are a total of {item[0]} unique countries among our users.");
                             }
                             Console.WriteLine("\nPress [ENTER] to go back to the menu...");
                             Console.WriteLine("\n=================================================================================");
@@ -57,15 +57,11 @@ using System.Data.SqlClient;
                                 var dtPassword = db.GetDataTable("Select Count(Distinct password) from MOCK_DATA", allParameters);
                                 foreach (DataRow Ditem in dtPassword.Rows)
                                 {
-                                    var dtUsers = db.GetDataTable("Select Count(id) from MOCK_DATA", allParameters); //få ut antalet id
-                                    foreach (DataRow UItem in dtUsers.Rows)
-                                    {
-                                        Console.WriteLine("UITEM = " + dtUsers);
-                                        if (item[0] == UItem[0] && Ditem[0] == UItem[0]) //jämför ifall antalet unika username och password är lika med antalet id
-                                        Console.WriteLine("True.");
-                                        else
-                                        Console.WriteLine("They are not unique. There are a total of " + item[0] + " unique usernames in this database and " + Ditem[0] + " unique passwords in this database!");
-                                    }
+                                    if (item[0].ToString() == "1000" && Ditem[0].ToString() == "1000") //jämför ifall antalet unika username och password är lika med antalet användare
+                                    Console.WriteLine($"Yes, they are all unique. There are a total of {item[0]} unique usernames and {Ditem[0]} unique passwords in this database!");
+                                    else
+                                    Console.WriteLine($"No, they are not unique. There are a total of {item[0]} unique usernames in this database and {Ditem[0]} unique passwords in this database!");
+                                    
                                 }
                             }
                             Console.WriteLine("\nPress [ENTER] to go back to the menu...");
@@ -144,7 +140,7 @@ using System.Data.SqlClient;
                     }
                 }
 
-                Console.ReadLine();
+                
             }
         }
     }
